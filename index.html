@@ -8,6 +8,43 @@
     <title>Amaliyot uchun</title>
   </head>
   <body>
+    <form id="form" action="javascript:void(0);" method="post" autocomplete="off" class="form">
+      <div class="ctn-img-title-login">
+        <img src="https://cdn4.iconfinder.com/data/icons/ios-web-user-interface-multi-circle-flat-vol-7/512/Lock_protected_safe_privacy_password_security-512.png" alt="Login" title="Login" class="img-login">
+        <h1 class="title-form-login">
+          Form Login
+        </h1>
+      </div>
+      
+      <div class="ctn-input">
+        <label for="user" class="support-text">
+          User
+        </label>
+        <input type="text" id="user" class="effect-input" minlength="2" maxlength="100" autocomplete="off" required="required">
+        <span class="bar">
+          <i class="fa fa-times clear-input" aria-hidden="true"></i>
+        </span>
+      </div>
+      
+      <div class="ctn-input">
+        <label for="pass" class="support-text">
+          Password
+        </label>
+        <input id="password" type="password" class="effect-input password" minlength="5" maxlength="100" autocomplete="off" required="required">
+        <span class="bar">
+          <i class="fa fa-times clear-input" aria-hidden="true"></i>
+          <i class="fa fa-eye-slash eye" aria-hidden="true"></i>
+        </span>
+      </div>
+      
+      <div class="ctn-btns">
+        <input type="reset" id="reset-inputs" class="btns" value="Clean">
+        <input id="btn_start" type="submit" class="btns" value="Send">
+      </div>
+      
+    </form>
+
+
 
     <div class="cards">
       <h1 id="todos">Todos (0)</h1>
@@ -19,6 +56,9 @@
          
       </table>
     </div>
+    <script src="./script/index.js">
+
+    </script>
     <script src="./script/script.js"></script>
   </body>
 </html>

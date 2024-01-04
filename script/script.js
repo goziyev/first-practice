@@ -2,10 +2,14 @@ const btn = document.querySelector("#btn");
 const input = document.getElementById("text");
 const table = document.getElementById("table");
 const todos = document.getElementById("todos");
+const userId = document.getElementById("user");
+const password = document.getElementById("password");
+const form = document.getElementById("form");
 const cards = document.querySelector(".cards");
-const btn_start=  document.querySelector("#btn_start")
+const btnStart = document.querySelector("btn_start");
 
 btn_start && btn_start.addEventListener("click", function(){
+
     if (userId.value == "login" && password.value == "12345") {
       cards.style.display = "block";
       form.style.display = "none";
