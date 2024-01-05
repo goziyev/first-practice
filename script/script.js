@@ -11,9 +11,21 @@ function validate() {
     input.style.outlineColor = "red";
     return false;
   }
+  if(!input.value.trim()){
+    input.value = ""
+
+    alert("Iltimos matn kiriting...")
+    return false
+  }
+  if(input.value.length <= 4){
+    alert("Ishoralar soni 4 tadan kam bo'lishi mumkin emas !!!")
+    input.value = ""
+    return false
+  }
   if (Number(input.value)) {
     alert("Bu joyga raqam kiritish mumkin emas");
     input.focus();
+    input.value = ""
     input.style.outlineColor = "red";
     return false;
   } else {
@@ -48,6 +60,7 @@ function createRow(user) {
   }
 
   return `
+  
     <tr data-item ="todo_${user.id}">
     <td><input type="checkbox"  ${check} ></td>
      <td style = '${styleLine}'>${user.name}</td>
@@ -87,6 +100,7 @@ btn &&
       const tr = createRow(user);
       table.innerHTML += tr;
     }
+
     clear(input);
   });
   
@@ -135,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let data = JSON.parse(localStorage.getItem("users"));
             if (data[index]["id"] == elId) {
               input.value = data[index].name;
+              
             }
           }
         }

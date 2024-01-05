@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:200");
 * {
   margin: 0;
   padding: 0;
@@ -17,11 +18,16 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background: #020024;
+  background: -webkit-gradient(linear, left top, right top, from(#020024), color-stop(52%, #020226), to(#00d4ff));
+  background: linear-gradient(90deg, #020024 0%, #020226 52%, #00d4ff 100%);
 }
 
 .cards {
-  border: 1px solid black;
+  -webkit-box-shadow: 0px 0px 40px white;
+          box-shadow: 0px 0px 40px white;
   padding: 10px;
+  background-color: white;
   width: 600px;
 }
 
@@ -70,6 +76,8 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  border: 1px solid red;
+  margin-bottom: 10px;
 }
 
 .table tr td input {
@@ -80,6 +88,7 @@ body {
 
 .table tr img {
   cursor: pointer;
+  margin-left: 15px;
 }
 
 .table tr :nth-child(2) {
