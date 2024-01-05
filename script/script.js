@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let data = JSON.parse(localStorage.getItem("users"));
             if (data[index]["id"] == elId) {
               input.value = data[index].name;
-              
+              user.id = elId
             }
           }
         }
