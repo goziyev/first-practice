@@ -17,11 +17,6 @@ function validate() {
     alert("Iltimos matn kiriting...")
     return false
   }
-  if(input.value.length <= 4){
-    alert("Ishoralar soni 4 tadan kam bo'lishi mumkin emas !!!")
-    input.value = ""
-    return false
-  }
   if (Number(input.value)) {
     alert("Bu joyga raqam kiritish mumkin emas");
     input.focus();
@@ -30,6 +25,11 @@ function validate() {
     return false;
   } else {
     input.style.outlineColor = "Green";
+  }
+  if(input.value.length <= 4){
+    alert("Ishoralar soni 4 tadan kam bo'lishi mumkin emas !!!")
+    input.value = ""
+    return false
   }
 
   return true;
