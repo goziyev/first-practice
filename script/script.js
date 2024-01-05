@@ -2,19 +2,7 @@ const btn = document.querySelector("#btn");
 const input = document.getElementById("text");
 const table = document.getElementById("table");
 const todos = document.getElementById("todos");
-const userId = document.getElementById("user");
-const password = document.getElementById("password");
-const form = document.getElementById("form");
-const cards = document.querySelector(".cards");
-const btnStart = document.querySelector("btn_start");
 
-btn_start && btn_start.addEventListener("click", function(){
-
-    if (userId.value == "login" && password.value == "12345") {
-      cards.style.display = "block";
-      form.style.display = "none";
-    }
-})
 
 function validate() {
   if (!input.value) {
@@ -31,17 +19,41 @@ function validate() {
   } else {
     input.style.outlineColor = "Green";
   }
+
   return true;
+}
+function changeStatus(id, status) {
+  let data = JSON.parse(localStorage.getItem("users"));
+  if (data.length) {
+    data = data.map((todo) => {
+      if (todo.id == id) {
+        todo.status = status;
+      }
+      return todo;
+    });
+  }
+  localStorage.setItem("users", JSON.stringify(data));
 }
 
 function createRow(user) {
+  let check = "";
+  let styleLine = "";
+  if (user.status == "active") {
+    check = "";
+    styleLine = "text-decoration:none";
+  }
+  if (user.status == "inactive") {
+    check = "checked";
+    styleLine = "text-decoration:line-through";
+  }
+
   return `
-    <tr>
-    <td><input type="checkbox" name="" id="checkbox"></td>
-     <td>${user.name}</td>
+    <tr data-item ="todo_${user.id}">
+    <td><input type="checkbox"  ${check} ></td>
+     <td style = '${styleLine}'>${user.name}</td>
      <td>
        <span>
-       <img src="./img/update.png" width="30" alt="">
+       <img class = "update" data-id = ${user.id} src="./img/update.png" width="30" alt="">
        <img class="delate"  data-id = "${user.id}" src="./img/delate.png" width="30" alt="">
      </span>
      </td>
@@ -54,6 +66,8 @@ function clear(text) {
 }
 let dataLocalStorage = [];
 
+
+
 btn &&
   btn.addEventListener("click", function () {
     if (validate()) {
@@ -61,7 +75,9 @@ btn &&
       const user = {
         name: input.value,
         id: Date.now(),
+        status: "active",
       };
+
       if (localStorage.getItem("users")) {
         dataLocalStorage = JSON.parse(localStorage.getItem("users"));
       }
@@ -73,7 +89,9 @@ btn &&
     }
     clear(input);
   });
+  
 
+  
 document.addEventListener("DOMContentLoaded", function () {
   let data = [];
   if (localStorage.getItem("users")) {
@@ -94,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
       btn.addEventListener("click", function () {
         let elId = this.getAttribute("data-id");
         if (elId) {
-          let isDelate = confirm("Rostdan ham o'chirmoqchimisiz !!!");
+          let isDelate = true
           if (isDelate) {
             data = data.filter((el) => {
               return el.id != elId;
@@ -106,4 +124,69 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+  const updateButtons = document.querySelectorAll("img.update");
+  if (updateButtons.length) {
+    updateButtons.forEach((btn, index) => {
+      btn.addEventListener("click", function () {
+        let elId = this.getAttribute("data-id");
+        if (elId) {
+          let isUpdate = true
+          if (isUpdate) {
+            let data = JSON.parse(localStorage.getItem("users"));
+            if (data[index]["id"] == elId) {
+              input.value = data[index].name;
+            }
+          }
+        }
+      });
+    });
+  }
+  const checkboxes = document.querySelectorAll("input[type='checkbox'");
+  if (checkboxes.length) {
+    checkboxes.forEach((item) => {
+      item.addEventListener("change", function (event) {
+        let checkedId = this?.parentNode?.parentNode
+          ?.getAttribute("data-item")
+          .slice(5);
+        if (checkedId) {
+          if (event.target.checked) {
+            this.parentNode.nextSibling.nextSibling.style.textDecoration = "line-through"  
+            changeStatus(checkedId,"inactive")
+          }else{
+            this.parentNode.nextSibling.nextSibling.style.textDecoration = "none"
+
+            changeStatus(checkedId,"active")      
+          }
+        }
+      });
+    });
+  }
+   
 });
+
+input && input.addEventListener('keyup', function (event) {
+  if (event.keyCode == 13) {
+      if (validate(input)) {
+          const user = {
+              id: Date.now(),
+              name:input.value,
+              status: "active"
+          };
+          let data = [];
+          if (localStorage.getItem('users')) {
+              data = JSON.parse(localStorage.getItem('users'));
+          }
+      
+          data.push(user);
+          localStorage.setItem('users', JSON.stringify(data));
+          todos.innerHTML = `Todos (${data.length})`;
+          let todoItem = createRow(user);
+          table.innerHTML += todoItem;
+
+          input.value = '';
+
+      } else {
+          console.log("Validatiyadan o'tmadi");
+      }
+  }
+})
